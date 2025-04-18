@@ -38,30 +38,37 @@
             min-height: 100vh;
             background-color: var(--background);
             color: var(--text);
+            padding: 1rem;
         }
 
         .counter-container {
             background-color: var(--card-bg);
             border-radius: 16px;
-            padding: 2.5rem;
-            width: 90%;
-            max-width: 400px;
+            padding: min(5vw, 3rem);
+            width: 100%;
+            max-width: 600px;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             position: relative;
+            aspect-ratio: 1/1;
         }
 
         .counter-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
+            gap: clamp(1rem, 3vw, 2rem);
+            margin: 1rem 0;
+            flex-grow: 1;
         }
 
         .counter {
-            font-size: clamp(4rem, 15vw, 6rem);
+            font-size: min(20vw, 8rem);
             font-weight: 700;
-            min-width: 100px;
+            min-width: 30%;
             text-align: center;
             color: var(--text);
             transition: transform 0.2s ease;
@@ -73,18 +80,19 @@
         }
 
         .arrow-btn {
-            width: 56px;
-            height: 56px;
+            width: min(15vw, 80px);
+            height: min(15vw, 80px);
             border-radius: 50%;
             border: none;
             background-color: var(--primary);
             color: white;
-            font-size: 1.8rem;
+            font-size: min(5vw, 2.5rem);
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
             transition: all 0.2s ease;
+            flex-shrink: 0;
         }
 
         .arrow-btn:hover {
@@ -98,9 +106,9 @@
 
         .btn-reset {
             display: block;
-            margin: 1.5rem auto 0;
-            padding: 0.6rem 1.2rem;
-            font-size: 0.9rem;
+            margin: 1rem auto 0;
+            padding: 0.8rem 1.5rem;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
             background-color: transparent;
             color: #e63946;
             border: 2px solid #e63946;
@@ -108,6 +116,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-weight: 600;
+            width: fit-content;
         }
 
         .btn-reset:hover {
@@ -116,10 +125,10 @@
 
         .theme-toggle {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 40px;
-            height: 40px;
+            top: min(2vw, 1.5rem);
+            right: min(2vw, 1.5rem);
+            width: min(10vw, 50px);
+            height: min(10vw, 50px);
             border-radius: 50%;
             border: none;
             background-color: var(--primary);
@@ -128,7 +137,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.2rem;
+            font-size: min(4vw, 1.5rem);
         }
 
         /* Hide theme toggle on small screens */
@@ -138,35 +147,10 @@
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-height: 500px) {
             .counter-container {
-                padding: 1.5rem;
-            }
-            
-            .counter {
-                font-size: clamp(3.5rem, 15vw, 5rem);
-            }
-            
-            .arrow-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 1.6rem;
-            }
-            
-            .counter-wrapper {
-                gap: 1rem;
-            }
-        }
-
-        @media (max-width: 320px) {
-            .counter {
-                font-size: clamp(3rem, 15vw, 4rem);
-            }
-            
-            .arrow-btn {
-                width: 44px;
-                height: 44px;
-                font-size: 1.4rem;
+                min-height: 80vh;
+                aspect-ratio: unset;
             }
         }
     </style>
