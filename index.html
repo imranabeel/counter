@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --text: #f8f9fa;
+            --background: #212529;
+            --card-bg: #2b3035;
+        }
+
+        [data-theme="light"] {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4895ef;
+            --text: #212529;
+            --background: #f8f9fa;
+            --card-bg: #e9ecef;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--background);
+            color: var(--text);
+        }
+
+        .counter-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .counter-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .counter {
+            font-size: clamp(3rem, 10vw, 4rem);
+            font-weight: 700;
+            min-width: 80px;
+            text-align: center;
+            color: var(--text);
+            transition: transform 0.2s ease;
+        }
+
+        .counter.active {
+            transform: scale(1.1);
+        }
+
+        .arrow-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            background-color: var(--primary);
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .arrow-btn:hover {
+            background-color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .arrow-btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-reset {
+            display: block;
+            margin: 1.5rem auto 0;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            background-color: transparent;
+            color: #e63946;
+            border: 2px solid #e63946;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+
+        .btn-reset:hover {
+            background-color: rgba(230, 57, 70, 0.1);
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background-color: var(--primary);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 480px) {
+            .counter-container {
+                padding: 1.5rem;
+            }
+            
+            .arrow-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.5rem;
+            }
+            
+            .counter-wrapper {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="counter-container">
+        <button class="theme-toggle" id="themeToggle">🌓</button>
+        
+        <div class="counter-wrapper">
+            <button class="arrow-btn" id="decrement">−</button>
+            <div class="counter" id="counter">0</div>
+            <button class="arrow-btn" id="increment">+</button>
+        </div>
+        
+        <button class="btn-reset" id="reset">Reset</button>
+    </div>
+
+    <script>
+        const counterEl = document.getElementById('counter');
+        const incrementBtn = document.getElementById('increment');
+        const decrementBtn = document.getElementById('decrement');
+        const resetBtn = document.getElementById('reset');
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        let count = 0;
+        let isDarkMode = true;
+        
+        // Counter functionality
+        function updateCounter() {
+            counterEl.textContent = count;
+            counterEl.classList.add('active');
+            setTimeout(() => {
+                counterEl.classList.remove('active');
+            }, 200);
+        }
+        
+        incrementBtn.addEventListener('click', () => {
+            count++;
+            updateCounter();
+        });
+        
+        decrementBtn.addEventListener('click', () => {
+            count--;
+            updateCounter();
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            count = 0;
+            updateCounter();
+        });
+        
+        // Theme toggle functionality
+        themeToggle.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            html.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+            themeToggle.textContent = isDarkMode ? '🌓' : '🌒';
+        });
+        
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp' || e.key === '+') {
+                count++;
+                updateCounter();
+            } else if (e.key === 'ArrowDown' || e.key === '-') {
+                count--;
+                updateCounter();
+            } else if (e.key === 'r' || e.key === 'R') {
+                count = 0;
+                updateCounter();
+            } else if (e.key === 't' || e.key === 'T') {
+                themeToggle.click();
+            }
+        });
+    </script>
+</body>
+</html>
